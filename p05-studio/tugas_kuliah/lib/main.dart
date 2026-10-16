@@ -38,6 +38,11 @@ class _HalamanTugasState extends State<HalamanTugas> {
     });
     isian.clear();
   }
+  void hapusTugas(int i) {
+    setState(() {
+      daftarTugas.removeAt(i);
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -61,10 +66,23 @@ class _HalamanTugasState extends State<HalamanTugas> {
             ),
           ),
           Expanded(
-            child: ListView.builder(
-              itemCount: daftarTugas.length,
-              itemBuilder: (context, i) => ListTile(title: Text(daftarTugas[i])),
-            ),
+            child: daftarTugas.isEmpty
+                ? const Center(child: Text('Belum ada tugas'))
+                : ListView.builder(
+                    itemCount: daftarTugas.length,
+                    itemBuilder: (context, i) => Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 16),
+                      child: Row(
+                        children: [
+                          Expanded(child: Text(daftarTugas[i])),
+                          IconButton(
+                            icon: const Icon(Icons.delete),
+                            onPressed: () => hapusTugas(i),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
           ),
         ],
       ),
